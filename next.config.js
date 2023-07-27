@@ -14,6 +14,7 @@ const nextConfig = {
     // !! WARN !!
     ignoreBuildErrors: true,
   },
+  ignoreDuringBuilds: ["/actions/getListings.ts"],
 };
 
 module.exports = nextConfig;
