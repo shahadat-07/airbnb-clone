@@ -3,30 +3,43 @@
 import { AiOutlineMenu } from "react-icons/ai";
 import Avatar from "../Avatar";
 import { useCallback, useState } from "react";
+import { signOut } from "next-auth/react";
 import MenuItem from "./MenuItem";
 import userRegisterModal from "@/app/hooks/useRegisterModal";
 import userLoginModal from "@/app/hooks/useLoginModal";
+import useRentModal from "@/app/hooks/useRentModal";
 import { User } from "@prisma/client";
-import { signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 interface UserMenuProps {
   currentUser?: User | null;
 }
 
 const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
-  const RegisterModal = userRegisterModal();
-  const LoginModal = userLoginModal();
+  const router = useRouter();
+  const registerModal = userRegisterModal();
+  const loginModal = userLoginModal();
+  const rentModal = useRentModal();
+
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleOpen = useCallback(() => {
     setIsOpen((value) => !value);
   }, []);
 
+  const onRent = useCallback(() => {
+    if (!currentUser) {
+      return loginModal.onOpen();
+    }
+
+    rentModal.onOpen();
+  }, [currentUser, loginModal, rentModal]);
+
   return (
     <div className="relative">
       <div className="flex flex-row items-center gap-3">
         <div
-          onClick={() => {}}
+          onClick={onRent}
           className="hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer"
         >
           Airbnb your home
@@ -48,19 +61,31 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
           {currentUser ? (
             <>
               <div className="flex flex-col cursor-pointer">
-                <MenuItem onClick={() => {}} label="My trips" />
+                <MenuItem
+                  onClick={() => router.push("/trips")}
+                  label="My trips"
+                />
               </div>
               <div className="flex flex-col cursor-pointer">
-                <MenuItem onClick={() => {}} label="My favorites" />
+                <MenuItem
+                  onClick={() => router.push("/favorites")}
+                  label="My favorites"
+                />
               </div>
               <div className="flex flex-col cursor-pointer">
-                <MenuItem onClick={() => {}} label="My reservation" />
+                <MenuItem
+                  onClick={() => router.push("/reservations")}
+                  label="My reservation"
+                />
               </div>
               <div className="flex flex-col cursor-pointer">
-                <MenuItem onClick={() => {}} label="My properties " />
+                <MenuItem
+                  onClick={() => router.push("/properties")}
+                  label="My properties "
+                />
               </div>
               <div className="flex flex-col cursor-pointer">
-                <MenuItem onClick={() => {}} label="Aribnb my home " />
+                <MenuItem onClick={rentModal.onOpen} label="Aribnb my home " />
               </div>
               <hr />
               <div className="flex flex-col cursor-pointer">
@@ -70,10 +95,10 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
           ) : (
             <>
               <div className="flex flex-col cursor-pointer">
-                <MenuItem onClick={LoginModal.onOpen} label="Login" />
+                <MenuItem onClick={loginModal.onOpen} label="Login" />
               </div>
               <div className="flex flex-col cursor-pointer">
-                <MenuItem onClick={RegisterModal.onOpen} label="Sign Up" />
+                <MenuItem onClick={registerModal.onOpen} label="Sign Up" />
               </div>
             </>
           )}
