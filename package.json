@@ -41,6 +41,7 @@
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
     "@types/leaflet": "^1.9.3",
+    "@types/react-date-range": "^1.4.4",
     "eslint": "8.45.0",
     "eslint-config-next": "13.4.12",
     "prisma": "^4.16.2"
