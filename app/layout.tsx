@@ -13,7 +13,7 @@ import ClientOnly from "./components/ClientOnly";
 const font = Nunito({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Airbnb",
+  title: "Hotel Hub",
   description: "Airbnb clone",
 };
 
