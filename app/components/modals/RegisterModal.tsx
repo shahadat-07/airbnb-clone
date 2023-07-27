@@ -17,6 +17,7 @@ import { signIn } from "next-auth/react";
 
 const RegisterModal = () => {
   const registerModal = userRegisterModal();
+
   const loginModal = userLoginModal();
   const [isLoading, setIsLoading] = useState(false);
 
