@@ -8,11 +8,12 @@ import { useRouter } from "next/navigation";
 import Heading from "@/app/components/Heading";
 import Container from "@/app/components/Container";
 import ListingCard from "@/app/components/listings/ListingCard";
-import { Reservation, User } from "@prisma/client";
+import { SafeReservation } from "@/app/types";
+import { SafeUser } from "@/app/types";
 
 interface TripsClientProps {
-  reservations: Reservation[];
-  currentUser?: User | null;
+  reservations: SafeReservation[];
+  currentUser?: SafeUser | null;
 }
 
 const TripsClient: React.FC<TripsClientProps> = ({

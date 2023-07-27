@@ -8,11 +8,11 @@ import { useRouter } from "next/navigation";
 import Heading from "@/app/components/Heading";
 import Container from "@/app/components/Container";
 import ListingCard from "@/app/components/listings/ListingCard";
-import { Reservation, User } from "@prisma/client";
+import { SafeUser, SafeReservation } from "@/app/types";
 
 interface ReservationsClientProps {
-  reservations: Reservation[];
-  currentUser?: User | null;
+  reservations: SafeReservation[];
+  currentUser?: SafeUser | null;
 }
 
 const ReservationsClient: React.FC<ReservationsClientProps> = ({
